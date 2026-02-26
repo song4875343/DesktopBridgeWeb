@@ -1,0 +1,17 @@
+﻿[project]
+name = "greet"
+version = "0.1.0"
+description = "PyWebView desktop demo app"
+requires-python = ">=3.10"
+dependencies = [
+  "pywebview>=5.4",
+]
+
+[dependency-groups]
+dev = [
+  "pyinstaller>=6.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

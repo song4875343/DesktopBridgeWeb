@@ -1,0 +1,77 @@
+<!-- ui.html -->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Vibe App Demo</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .box { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+        button { cursor: pointer; padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Vibe Coding 演示</h1>
+
+    <!-- 功能 1: 普通逻辑 -->
+    <div class="box">
+        <h3>1. 测试 Python 逻辑</h3>
+        <input type="text" id="nameInput" placeholder="输入你的名字" value="开发者">
+        <button onclick="testGreet()">打招呼</button>
+        <p id="greetResult"></p>
+    </div>
+
+    <!-- 功能 2: 文件 IO -->
+    <div class="box">
+        <h3>2. 测试文件 I/O (双端通用)</h3>
+        <button onclick="testFile()">📂 打开并分析文件</button>
+        <div id="fileResult"></div>
+    </div>
+
+    <!-- 引入 Bridge -->
+    <script type="module">
+        import { bridge } from './bridge.js';
+
+        // 挂载到 window 方便 HTML onclick 调用
+        window.testGreet = async () => {
+            try {
+                const name = document.getElementById('nameInput').value;
+                // ✨ 直接调用 core.py 里的 greet
+                const res = await bridge.greet(name);
+                document.getElementById('greetResult').innerText = res;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('greetResult').innerText = '错误: ' + error.message;
+            }
+        };
+
+        window.testFile = async () => {
+            try {
+                // ✨ 1. 抹平差异的打开文件
+                const file = await bridge.openFile(); 
+                if (!file) return;
+
+                document.getElementById('fileResult').innerHTML = `正在分析 ${file.name}...`;
+
+                // ✨ 2. 传给 Python 处理
+                const analysis = await bridge.analyze_file(file);
+                
+                // ✨ 3. 展示结果
+                document.getElementById('fileResult').innerHTML = 
+                    `<pre>${JSON.stringify(analysis, null, 2)}</pre>`;
+                
+                // (可选) 测试保存
+                // await bridge.saveFile("analysis.json", JSON.stringify(analysis));
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('fileResult').innerHTML = '错误: ' + error.message;
+            }
+        };
+
+        // 确保函数已加载
+        console.log('Bridge 已加载，函数已挂载到 window');
+    </script>
+</body>
+</html>
