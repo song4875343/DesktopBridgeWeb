@@ -1,14 +1,14 @@
 ---
-title: VibeSync Framework Development Guide
-description: Guidelines for developing dual-platform applications using VibeSync framework
-tags: [vibesync, pywebview, dual-platform, framework]
+title: PyDualBridge Framework Development Guide
+description: Guidelines for developing dual-platform applications using PyDualBridge framework
+tags: [pydualbridge, pywebview, dual-platform, framework]
 ---
 
-# VibeSync Framework Development Guide
+# PyDualBridge Framework Development Guide
 
 ## Framework Overview
 
-VibeSync is a dual-platform framework that enables Python applications to run seamlessly on both desktop (pywebview) and web (browser) environments with a single codebase.
+PyDualBridge is a dual-platform framework that enables Python applications to run seamlessly on both desktop (pywebview) and web (browser) environments with a single codebase.
 
 ### Core Architecture
 
@@ -199,7 +199,7 @@ await bridge.sys_show_notification("Alert", "Task completed!");
 
 ## Project Scaffolding Checklist
 
-When creating a new VibeSync app:
+When creating a new PyDualBridge app:
 
 1. ✅ Copy `bridge.js` and `main.py` (framework core)
 2. ✅ Create `core.py` with `AppCore` class
@@ -227,10 +227,10 @@ class AppCore:
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>VibeSync App</title>
+    <title>PyDualBridge App</title>
 </head>
 <body>
-    <h1>VibeSync App</h1>
+    <h1>PyDualBridge App</h1>
     <button id="btn">Click Me</button>
     <div id="output"></div>
 
@@ -238,7 +238,7 @@ class AppCore:
     import { bridge } from './bridge.js';
     
     document.getElementById('btn').onclick = async () => {
-        const result = await bridge.hello("VibeSync");
+        const result = await bridge.hello("PyDualBridge");
         document.getElementById('output').textContent = result;
     };
     </script>
@@ -281,7 +281,7 @@ class AppCore:
 
 ## AI Assistant Instructions
 
-When helping users develop with VibeSync:
+When helping users develop with PyDualBridge:
 
 1. **Always check** if `bridge.js` and `main.py` exist before suggesting modifications
 2. **Default to editing** `core.py` for business logic

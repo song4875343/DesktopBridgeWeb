@@ -1,13 +1,13 @@
 ---
-name: vibesync
-description: Build dual-platform Python applications using VibeSync framework - seamlessly runs on desktop (pywebview) and web (browser) with a single codebase. Edit core.py for business logic, use bridge.js for frontend calls.
+name: pydualbridge
+description: Build dual-platform Python applications using PyDualBridge framework - seamlessly runs on desktop (pywebview) and web (browser) with a single codebase. Edit core.py for business logic, use bridge.js for frontend calls.
 ---
 
-# VibeSync Framework Development Skill
+# PyDualBridge Framework Development Skill
 
 ## Overview
 
-VibeSync is a dual-platform framework enabling Python applications to run on both desktop (pywebview) and web (browser) environments with a single codebase.
+PyDualBridge is a dual-platform framework enabling Python applications to run on both desktop (pywebview) and web (browser) environments with a single codebase.
 
 ## Core Architecture
 
@@ -148,7 +148,7 @@ const clip = await bridge.sys_get_clipboard();
 
 ## Project Scaffolding
 
-When creating new VibeSync app:
+When creating new PyDualBridge app:
 
 1. Copy `bridge.js` and `main.py` (framework core)
 2. Create `core.py` with `AppCore` class
@@ -171,10 +171,10 @@ class AppCore:
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>VibeSync App</title>
+    <title>PyDualBridge App</title>
 </head>
 <body>
-    <h1>VibeSync App</h1>
+    <h1>PyDualBridge App</h1>
     <button id="btn">Click Me</button>
     <div id="output"></div>
 
@@ -182,7 +182,7 @@ class AppCore:
     import { bridge } from './bridge.js';
     
     document.getElementById('btn').onclick = async () => {
-        const result = await bridge.hello("VibeSync");
+        const result = await bridge.hello("PyDualBridge");
         document.getElementById('output').textContent = result;
     };
     </script>
@@ -213,7 +213,7 @@ class AppCore:
 
 ## AI Assistant Guidelines
 
-When helping with VibeSync:
+When helping with PyDualBridge:
 
 1. Check if `bridge.js` and `main.py` exist before suggesting modifications
 2. Default to editing `core.py` for business logic

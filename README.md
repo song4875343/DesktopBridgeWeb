@@ -1,6 +1,6 @@
-# VibeSync
+# DesktopBridgeWeb
 
-一个优雅的 Python + JavaScript 双端开发框架，让你的应用同时运行在桌面和 Web 平台。
+一个优雅的 pywebview + fastapi 双端开发框架，让你的应用同时运行在桌面和 Web 平台。
 
 ## 核心理念
 
@@ -157,6 +157,101 @@ await bridge.sys_show_notification("提示", "操作成功");
 - Web 模式下，文件通过 Base64 编码传输
 - 方法名不要以 `_` 开头（会被过滤）
 - 确保 Python 方法返回 JSON 可序列化的数据
+
+## AI 助手集成
+
+DesktopBridgeWeb 提供了完整的 AI 编程助手集成支持，让 AI 能够理解框架规范并高效开发。
+
+### 支持的 AI 工具
+
+| AI 工具 | 配置文件 | 状态 |
+|---------|---------|------|
+| Kiro / Windsurf | `.kiro/steering/desktopbridgeweb-framework.md` | ✅ 自动加载 |
+| Claude Code | `.claude/skills/desktopbridgeweb/SKILL.md` | ✅ 按需加载 |
+| OpenCode | `.opencode/skills/desktopbridgeweb/SKILL.md` | ✅ 自动发现 |
+
+### Kiro / Windsurf 集成
+
+Kiro 会自动加载 steering 规则，无需手动配置：
+
+```
+.kiro/steering/desktopbridgeweb-framework.md
+```
+
+特性：
+- 自动理解框架架构和开发规范
+- 只编辑 `core.py` 添加业务逻辑
+- 使用 `bridge.*` 调用后端方法
+- 遵循双平台开发最佳实践
+
+### Claude Code 集成
+
+Claude Code 会自动发现项目中的 skill：
+
+```
+.claude/skills/desktopbridgeweb/SKILL.md
+```
+
+使用方式：
+- 在对话中提及 "desktopbridgeweb" 或 "dual-platform"
+- Claude 会自动加载 skill 并理解框架规范
+- 或手动加载：在 Claude Code 中使用 skill 工具
+
+### OpenCode 集成
+
+OpenCode 自动扫描并加载项目 skill：
+
+```
+.opencode/skills/desktopbridgeweb/SKILL.md
+```
+
+特性：
+- 项目级自动发现
+- 支持全局 skill（`~/.config/opencode/skills/`）
+- 按需加载，不占用初始上下文
+
+### 使用示例
+
+所有 AI 助手集成后，开发变得极其简单：
+
+```
+你: "添加一个计算器功能"
+AI: ✅ 在 core.py 添加 calculate() 方法
+    ✅ 返回 JSON 格式数据
+    ✅ 前端使用 bridge.calculate() 调用
+
+你: "添加文件上传功能"  
+AI: ✅ 使用 bridge.openFile() 模式
+    ✅ 处理 Base64 编码
+    ✅ 在 core.py 添加文件处理方法
+
+你: "添加状态管理"
+AI: ✅ 在 AppCore.__init__() 初始化状态
+    ✅ 添加 get_state() 和 update_state() 方法
+    ✅ 遵循 JSON 序列化规范
+```
+
+### 优势
+
+- 🎯 **零学习成本**：AI 已理解所有框架规范
+- 🚀 **开发提速**：无需重复解释架构
+- ✅ **规范一致**：AI 自动遵循最佳实践
+- 🔧 **智能建议**：AI 知道何时编辑哪个文件
+
+### 手动安装 Skills（可选）
+
+如果需要在其他项目中使用，可以复制 skill 文件：
+
+```bash
+# Claude Code
+cp -r .claude/skills/desktopbridgeweb ~/.claude/skills/
+
+# OpenCode  
+cp -r .opencode/skills/desktopbridgeweb ~/.config/opencode/skills/
+
+# Kiro (项目级，不建议全局)
+# steering 规则通常保持在项目内
+```
 
 ## 许可证
 
