@@ -1,6 +1,8 @@
 # DesktopBridgeWeb
 
 一个优雅的 pywebview + fastapi 双端开发框架，让你的应用同时运行在桌面和 Web 平台。
+一个将任意 Python 类快速转换为 FastAPI 服务的函数。
+
 
 ## 核心理念
 
@@ -32,10 +34,14 @@ pip install pywebview
 
 ```
 your-app/
-├── bridge.js       # 前端桥接层（自动适配环境）
-├── main.py         # 启动入口（桌面模式）
-├── core.py         # 业务逻辑（你的代码）
-└── index.html      # UI 界面（你的代码）
+├── bridge.js         # 前端桥接层（自动适配环境）
+├── main.py           # 启动入口（桌面模式）
+├── core.py           # 业务逻辑（你的代码）
+├── index.html        # UI 界面（你的代码）
+├── api_generator.py  # API 自动生成器
+├── run_test.py       # 测试服务启动脚本
+└── test/
+    └── test.py       # API 生成器测试示例
 ```
 
 ### 编写业务逻辑
@@ -80,6 +86,47 @@ python main.py
 # Web 模式（需自行实现 FastAPI 服务端）
 # uvicorn server:app --reload
 ```
+
+### API 生成器测试
+
+项目提供了 `api_generator.py`，可以 ：
+
+```python
+# test/test.py
+from api_generator import create_api_from_instance
+
+class MathService:
+    def add(self, a: int, b: int = 10):
+        return {"result": a + b}
+
+    def multiply(self, a: float, b: float):
+        return {"result": a * b}
+
+# 一行代码将类转换为 FastAPI 应用
+app = create_api_from_instance(MathService(), title="数学计算服务")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+```
+
+**运行测试服务：**
+
+```bash
+# 方法一：使用包装脚本
+uv run python test/test.py
+```
+
+服务启动后访问：
+- API 文档：http://127.0.0.1:8000/docs
+- 接口示例：
+  - POST/GET http://127.0.0.1:8000/add?a=1&b=2
+  - POST/GET http://127.0.0.1:8000/multiply?a=2.5&b=4
+
+**特性：**
+- 自动挂载类中所有非 `_` 开头的方法为 API 接口
+- 同时支持 GET 和 POST 请求
+- 自动生成 OpenAPI 文档
 
 ## 工作原理
 
